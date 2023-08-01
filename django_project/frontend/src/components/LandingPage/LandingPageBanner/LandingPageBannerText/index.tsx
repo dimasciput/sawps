@@ -41,7 +41,7 @@ const LandingPageBannerText:FC<ILandingPageBannerImage> =() =>{
                     {
                         BtnProps.map((prop, index) => 
                             <div className='landing-page-banner-text-btns' key={index}>
-                                <CustomButton onClick={() => window.location.href = prop.url} color={prop.color as ButtonColor} buttonText={prop.text} sx={{ width: 180, mr: 2 }} />
+                                <CustomButton onClick={() => window.location.href = prop.url} color={prop.color as ButtonColor} buttontext={prop.text} sx={{ width: 180, mr: 2 }} />
                             </div>
                         )
                     }
