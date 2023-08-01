@@ -92,9 +92,11 @@ EXPOSE 8080
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
-FROM base as test
+FROM node as test
 
 ADD django_project /home/web/django_project
 
 WORKDIR /home/web/django_project
 
+# Open port 8080 as we will be running our django dev server on
+EXPOSE 8080

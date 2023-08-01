@@ -46,8 +46,8 @@ jobs:
           file: deployment/docker/Dockerfile
           push: false
           load: true
-          target: dev
-          tags: kartoza/sanbi:dev
+          target: test
+          tags: kartoza/sanbi:test
           cache-from: |
             type=gha,scope=test
             type=gha,scope=dev
@@ -69,6 +69,7 @@ jobs:
           python manage.py makemigrations
           python manage.py migrate
           python manage.py collectstatic --noinput --verbosity 0
+          python manage.py runserver 0.0.0.0:8080
           export DJANGO_SETTINGS_MODULE=core.settings.dev && coverage run manage.py test && coverage xml
           EOF
           docker cp sawps_dev:/home/web/django_project/coverage.xml ../coverage.xml
