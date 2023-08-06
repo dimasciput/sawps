@@ -70,7 +70,7 @@ jobs:
           python manage.py collectstatic --noinput --verbosity 0
           export DJANGO_SETTINGS_MODULE=core.settings.dev && coverage run manage.py test && coverage xml
           EOF
-          docker cp sawps_dev:/home/web/django_project/coverage.xml ../coverage.xml
+          docker cp sanbi_dev_1:/home/web/django_project/coverage.xml ../coverage.xml
       - name: Install dependencies
         working-directory: ./django_project/frontend
         run: npm ci
