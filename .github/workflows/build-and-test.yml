@@ -61,6 +61,13 @@ jobs:
           make migrate
           make npm-install
           make build-react
+      - name: Test localhost endpoint
+        run: |
+          curl http://localhost:61100/
+          if [ $? -ne 0 ]; then
+            echo "Curl command failed"
+            exit 1
+          fi
       - name: Run Coverage test
         working-directory: deployment
         run: |
