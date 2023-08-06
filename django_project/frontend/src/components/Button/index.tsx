@@ -15,7 +15,7 @@ const StyledButton = styled(Button)<{ bgcolor: string}>(({ bgcolor}) => ({
 
 interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color: ButtonColor,
-  buttonText?:string,
+  buttontext?:string,
   sx?:any
 }
 
@@ -34,9 +34,8 @@ const CustomButton: React.FC<CustomButtonProps> = (props) => {
         return '#3F51B5';
     }
   };
-  console.log(other)
   return (
-    <StyledButton bgcolor={getColor(color)} {...other}>{props.buttonText}</StyledButton>
+    <StyledButton bgcolor={getColor(color)} {...other}>{props.buttontext}</StyledButton>
   );
 };
 
