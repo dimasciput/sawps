@@ -12,10 +12,9 @@ services:
       # for django test server
       - "61100:8080"
     command:
-      - python
-      - manage.py
-      - runserver
-      - 0.0.0.0:8080
+      - tail
+      - -f
+      - /dev/null
 
   worker:
     volumes:

@@ -43,6 +43,13 @@ dev:
 	@echo "------------------------------------------------------------------"
 	@docker-compose ${ARGS} up -d dev worker
 
+dev-runserver:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Start django runserver in dev container"
+	@echo "------------------------------------------------------------------"
+	@docker-compose $(ARGS) exec -T dev bash -c "nohup python manage.py runserver 0.0.0.0:8080 &"
+
 npm-install:
 	@echo
 	@echo "------------------------------------------------------------------"

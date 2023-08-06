@@ -61,7 +61,19 @@ jobs:
           make migrate
           make npm-install
           make build-react
+          make dev-runserver
+      - name: Start Simple HTTP Server
+        run: |
+          python -m http.server 8000 &
+          sleep 2 # Give the server time to start
       - name: Test localhost endpoint
+        run: |
+          curl http://localhost:8000/
+          if [ $? -ne 0 ]; then
+            echo "Curl command failed"
+            exit 1
+          fi
+      - name: Test localhost endpoint 2
         run: |
           curl http://localhost:61100/
           if [ $? -ne 0 ]; then
