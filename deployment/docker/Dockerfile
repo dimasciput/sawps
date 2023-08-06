@@ -94,6 +94,9 @@ CMD ["/usr/sbin/sshd", "-D"]
 
 FROM node as test
 
+COPY deployment/docker/requirements-dev.txt /requirements-dev.txt
+RUN pip install -r /requirements-dev.txt
+
 ADD django_project /home/web/django_project
 
 WORKDIR /home/web/django_project
