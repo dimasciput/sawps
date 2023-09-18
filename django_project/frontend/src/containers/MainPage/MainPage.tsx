@@ -4,6 +4,12 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import {
+  Experimental_CssVarsProvider as CssVarsProvider,
+  experimental_extendTheme as extendTheme,
+  useColorScheme,
+  createTheme
+} from '@mui/material/styles';
 import {RootState} from '../../app/store';
 import {useAppDispatch, useAppSelector } from '../../app/hooks';
 import TabPanel, { a11yProps } from '../../components/TabPanel';
@@ -29,6 +35,8 @@ import {
 } from '../../reducers/MapState';
 import DataList from './Data';
 import Metrics from './Metrics';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 
 
@@ -39,6 +47,26 @@ enum RightSideBarMode {
   PropertySummary = 1,
   FilteredResult = 2
 }
+
+const modeTheme = extendTheme({
+});
+
+export function ModeToggle() {
+  const { mode, setMode } = useColorScheme();
+  return (
+      <ToggleButtonGroup value={mode} exclusive
+                         onChange={() => setMode(mode === 'light' ? 'dark' : 'light')}>
+        <ToggleButton value={"light"}>
+          Light
+        </ToggleButton>
+        <ToggleButton value={"dark"}>
+          Dark
+        </ToggleButton>
+      </ToggleButtonGroup>
+  );
+}
+
+
 
 function MainPage() {
   const dispatch = useAppDispatch();
@@ -70,7 +98,7 @@ function MainPage() {
       }
     }
   }, [location.search]);
-  
+
   useEffect(() => {
     const tabNames = ['map', 'data', 'metrics', 'upload'];
     const selectedTabName = tabNames[selectedTab];
@@ -82,19 +110,19 @@ function MainPage() {
     if (location.pathname !== newPath) {
       navigate(newPath); // Update the URL with the tab name
     }
-  
+
     if (isUploadUrl) {
       setRightSideBarMode(RightSideBarMode.Upload);
       dispatch(setUploadState(UploadMode.SelectProperty));
       return; //hide all tabs
     }
-  
+
     // Replace the tab parameter in the URL
     const newUrl = window.location.href.replace(/\?tab=\d/, newPath);
     window.history.replaceState(null, '', newUrl);
   }, [selectedTab, navigate, location.pathname, isUploadUrl]);
-  
-  
+
+
 
   useEffect(() => {
     if (rightSideBarMode === RightSideBarMode.None) {
@@ -120,7 +148,11 @@ function MainPage() {
   }, [propertyItem, mapSelectionMode, uploadMode])
 
   return (
-    <div className="App">
+    <CssVarsProvider theme={modeTheme}>
+      <div style={{ position: "absolute", marginTop: -60, marginLeft: 150}}>
+        <ModeToggle/>
+      </div>
+      <div className="App">
       <div className="MainPage">
         <Grid container flexDirection={'row'}>
           <Grid item>
@@ -173,6 +205,7 @@ function MainPage() {
         { rightSideBarMode === RightSideBarMode.PropertySummary ? <RightSideBar element={PropertySummary} /> : null}
       </div>
     </div>
+    </CssVarsProvider>
   );
 }
 

@@ -49,3 +49,13 @@ body {
         overflow: auto;
     }
 }
+
+[data-mui-color-scheme="dark"] {
+    .MuiGrid-container, .TabPanels, .LeftSideBar .LeftSideBarContent {
+        background-color: var(--dark-gray);
+        color: var(--white);
+    }
+    .LeftSideBar .Layers .MuiList-root .MuiCheckbox-root.Mui-checked {
+        color: unset;
+    }
+}
